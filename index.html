@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; text-align: center; background-color: #ffe6e6; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; margin: 0; }
+        .container { max-width: 600px; padding: 20px; z-index: 2; }
+        img { width: 300px; border-radius: 15px; margin-bottom: 20px; }
+        .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 20px; }
+        #yesBtn { background-color: #ff4d4d; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 10px; cursor: pointer; transition: transform 0.2s ease-out; z-index: 1000; position: relative; }
+        #noBtn { background-color: #808080; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 10px; cursor: pointer; position: relative; z-index: 1; }
+        h1 { color: #d63384; }
+    </style>
+</head>
+<body>
+
+<div id="main-content" class="container">
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG5xZ3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN762clOW7/giphy.gif" alt="Cartoon Flower">
+    <h1 id="question">Will you be my Valentine? 🌹</h1>
+    <div class="buttons">
+        <button id="yesBtn" onclick="celebrate()">Yes</button>
+        <button id="noBtn" onclick="makeYesBigger()">No</button>
+    </div>
+</div>
+
+<script>
+    let scale = 1;
+    function makeYesBigger() {
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        scale += 4.0; // This makes it grow 20x very quickly
+        yesBtn.style.transform = `scale(${scale})`;
+        
+        const messages = ["Are you sure?", "Really?", "Think again!", "Pwease?", "You can't say no!"];
+        noBtn.innerText = messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function celebrate() {
+        document.getElementById('main-content').innerHTML = "<h1>Yay! See you on the 14th! ❤️</h1><img src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG5xZ3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/lTQF0ODLLJHzaOBCfy/giphy.gif'>";
+    }
+</script>
+</body>
+</html>
