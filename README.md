@@ -3,120 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wait... I have a question!</title>
+    <title>A special message for you...</title>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #fff0f3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden; /* Prevents scrollbars when Yes gets huge */
-            text-align: center;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        img {
-            width: 250px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            color: #ff4d6d;
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            transition: transform 0.2s ease-out; /* Smooth growth */
-        }
-
-        #noBtn {
-            background-color: #ced4da;
-            color: #495057;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-        }
-
-        #celebration {
-            display: none;
-        }
+        body { font-family: 'Arial', sans-serif; text-align: center; background-color: #ffe6e6; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; margin: 0; }
+        .container { max-width: 600px; padding: 20px; z-index: 2; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 20px; position: relative; }
+        #yesBtn { background-color: #ff4d4d; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 10px; cursor: pointer; transition: transform 0.2s ease-out; z-index: 1000; position: relative; font-weight: bold; }
+        #noBtn { background-color: #808080; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 10px; cursor: pointer; position: relative; z-index: 1; }
+        h1 { color: #d63384; font-size: 1.6rem; line-height: 1.4; }
+        b { font-weight: 900; color: #b0005d; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,230,230,0.98); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="main-content" class="container">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG5xZ3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN762clOW7/giphy.gif" alt="Valentine Cartoon">
+<div id="overlay" onclick="startEverything()">
+    <h2 style="color: #d63384;">Tap to open your message ❤️</h2>
+    <p>Turn your volume up!</p>
+</div>
+
+<div id="main-content" class="container">
+    <div class="video-wrapper">
+        <iframe id="videoPlayer" src="https://www.youtube.com/embed/V9PVRfjEBTI?enablejsapi=1&loop=1&playlist=V9PVRfjEBTI" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    </div>
+    
+    <h1 id="question">Will you be my Valentine... also add **the one you love the most**? 🌹</h1>
+    
+    <div class="buttons">
+        <button id="yesBtn" onclick="celebrate()">Yes</button>
+        <button id="noBtn" onclick="makeYesBigger()">No</button>
+    </div>
+</div>
+
+<script>
+    let scale = 1;
+    const player = document.getElementById('videoPlayer');
+
+    function startEverything() {
+        document.getElementById('overlay').style.display = 'none';
+        player.src += "&autoplay=1&mute=0";
+    }
+
+    function makeYesBigger() {
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        scale += 4.5; 
+        yesBtn.style.transform = `scale(${scale})`;
         
-        <h1 id="questionText">Will you be my Valentine? 🌹</h1>
+        const messages = ["You sure?", "Think again!", "Sticky together?", "No choice now!", "Just click Yes!"];
+        noBtn.innerText = messages[Math.floor(Math.random() * messages.length)];
+        
+        // Push the No button further away as Yes grows
+        noBtn.style.transform = `translateX(${scale * 10}px)`;
+    }
 
-        <div class="btn-group">
-            <button id="yesBtn" onclick="accept()">Yes</button>
-            <button id="noBtn" onclick="growYes()">No</button>
-        </div>
-    </div>
-
-    <div id="celebration" class="container">
-        <h1>Yay! I knew you'd say yes! ❤️</h1>
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG5xZ3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/lTQF0ODLLJHzaOBCfy/giphy.gif" alt="Celebration">
-    </div>
-
-    <script>
-        let currentScale = 1;
-        const noMessages = ["Are you sure?", "Think again!", "Wait, look at the Yes button!", "It's getting bigger...", "You have no choice now!", "Resistance is futile!"];
-        let msgIndex = 0;
-
-        function growYes() {
-            const yesBtn = document.getElementById('yesBtn');
-            const noBtn = document.getElementById('noBtn');
-            
-            // The logic: Increase scale significantly (20x total over a few clicks)
-            currentScale += 3.5; 
-            yesBtn.style.transform = `scale(${currentScale})`;
-            
-            // Move the No button slightly to make it harder to click
-            const x = Math.random() * 50 - 25;
-            const y = Math.random() * 50 - 25;
-            noBtn.style.transform = `translate(${x}px, ${y}px)`;
-
-            // Cycle through funny messages
-            noBtn.innerText = noMessages[msgIndex];
-            msgIndex = (msgIndex + 1) % noMessages.length;
-        }
-
-        function accept() {
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('celebration').style.display = 'block';
-            document.body.style.backgroundColor = '#ffccd5';
-        }
-    </script>
+    function celebrate() {
+        document.getElementById('main-content').innerHTML = `
+            <h1 style="font-size: 2.5rem;">Yay! ❤️</h1>
+            <p style="font-size: 1.2rem; color: #d63384;">Birds of a feather, we should stick together!</p>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/V9PVRfjEBTI?autoplay=1&start=75" frameborder="0" allow="autoplay"></iframe>
+            </div>
+        `;
+    }
+</script>
 </body>
 </html>
