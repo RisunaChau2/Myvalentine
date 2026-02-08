@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+J john was right when he said:<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
